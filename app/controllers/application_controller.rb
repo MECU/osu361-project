@@ -1,4 +1,4 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  YAHOO_SEARCH_URL = 'https://query2.finance.yahoo.com/v1/finance/search?q='
+  YAHOO_TICKER_URL = 'https://query2.finance.yahoo.com/v8/finance/chart/'
 end

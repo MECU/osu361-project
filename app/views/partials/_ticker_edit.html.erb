@@ -1,0 +1,36 @@
+<form action="/edit" method="post">
+  <div class="row<%= index % 2 == 0 ? '' : ' bg-light bg-gradient' %>">
+    <div class="col-1"><a href="<%= "/ticker/#{transaction[:ticker]}" %>"><%= transaction[:ticker] %></a></div>
+    <div class="col-1" style="min-width: fit-content">
+      <input type="date" name="buy_date" value="<%= transaction[:buy_date] %>">
+    </div>
+    <div class="col-1">
+      <input type="number" name="qty" min="1" value="<%= transaction[:qty] %>" style="width: 50px">
+    </div>
+    <div class="col-1" align="right" style="min-width: fit-content">
+      <input type="number" name="price" value="<%= transaction[:price] %>" style="width: 100px">
+    </div>
+    <div class="col-1"></div>
+    <% if transaction[:sell_date].nil? %>
+      <div class="col-3" align="center"></div>
+    <% else %>
+      <div class="col-1" style="min-width: fit-content">
+        <input type="date" name="sell_date" value="<%= transaction[:sell_date] %>">
+      </div>
+      <div class="col-1" style="min-width: fit-content">
+        <input type="number" name="sell_price" min="0" value="<%= transaction[:sell_price] %>" style="width: 100px">
+      </div>
+    <% end %>
+    <div class="col-1">
+      <input type="hidden" value="<%= transaction[:id] %>" name="history_id"/>
+      <button class="btn btn-light" type="submit">
+        <img src="/save.png" height="25px" title="Save your sell entry"/>
+      </button>
+    </div>
+    <div class="col-1">
+      <a href="/dashboard">
+        <img src="/undo.png" height="20px" title="Undo your changes"/>
+      </a>
+    </div>
+  </div>
+</form>

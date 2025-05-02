@@ -8,3 +8,23 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+.parent {
+    display: flex;
+    height: 300px;
+    flex-direction: column;
+}
+
+.child {
+    height: 100px;
+    margin: auto;
+}
+
+.flash-message-delete {
+    border: 1px solid red;
+    height: auto
+}
+
+.flash-message-save {
+    border: 1px solid green;
+    height: auto
+}

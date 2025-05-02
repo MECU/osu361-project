@@ -1,0 +1,48 @@
+<%= render 'partials/header' %>
+<div class="parent">
+
+
+  <div class="container text-center">
+    <h1><%= details['longName'] %></h1>
+    <h2><%= ticker.upcase %></h2>
+  </div>
+  <turbo-frame id="search" class="child">
+    <% if defined? buy %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Your buy record was successful.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+    <div class="child">
+      Record Buy:
+      <form action="/buy" method="post">
+        <label>
+          Date
+          <input data-turbo-frame type="date" name="date" value="<%= Date.today.strftime('%Y-%m-%d') %>">
+        </label>
+        <label>
+          Qty
+          <input data-turbo-frame type="number" name="qty" min='1' value="1">
+        </label>
+        <label>
+          Price
+          <input data-turbo-frame type="number" name="price" value=<%= details['regularMarketPrice'] %>>
+        </label>
+        <input type='hidden' name='username' value='<%= user[:username] %>'/>
+        <input type='hidden' name='ticker' value='<%= ticker.upcase %>'/>
+        <button class="btn btn-light" type="submit"><img src="/save.png" height="25px" title="Save your sell entry"/></button>
+        <a href="<%= "/ticker/#{ticker}" %>"><img src="/undo.png" height="25px" title="Undo your changes"/></a>
+      </form>
+    </div>
+    <div>
+      <ul>
+        <li>Price: $<%= details['regularMarketPrice'] %></li>
+        <li>Day High: $<%= details['regularMarketDayHigh'] %></li>
+        <li>Day Low: $<%= details['regularMarketDayLow'] %></li>
+        <li>Day Volume: $<%= details['regularMarketVolume'] %></li>
+        <li>52-week High: $<%= details['fiftyTwoWeekHigh'] %></li>
+        <li>52-week Low: $<%= details['fiftyTwoWeekLow'] %></li>
+      </ul>
+    </div>
+  </turbo-frame>
+</div>

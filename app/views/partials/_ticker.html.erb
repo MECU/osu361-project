@@ -1,0 +1,35 @@
+<div class="row row-cols-auto<%= index % 2 == 0 ? '' : ' bg-light bg-gradient' %>">
+  <div class="col-1">
+    <a href="<%= "/ticker/#{transaction[:ticker]}" %>" data-turbo="false" class="link-info"><%= transaction[:ticker] %></a>
+  </div>
+  <div class="col-1" style="min-width: fit-content"><%= transaction[:buy_date] %></div>
+  <div class="col-1"><%= transaction[:qty] %></div>
+  <div class="col-1" align="right" style="min-width: fit-content"><%= number_to_currency(transaction[:price], precision: 2) %></div>
+  <div class="col-1" align="right" style="min-width: fit-content"><%= number_to_currency(transaction.basis, precision: 2) %></div>
+  <% if transaction[:sell_date].nil? %>
+    <div class="col-3" style="min-width: 142px" align="center">
+      <% unless params[:edit] || params[:sell] %>
+        <a href="/dashboard?sell=<%= transaction[:id] %>" class="link-primary">Sell</a>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="col-1" style="min-width: fit-content"><%= transaction[:sell_date] %></div>
+    <div class="col-1" align="right" style="min-width: fit-content"><%= number_to_currency(transaction[:sell_price], precision: 2) %></div>
+    <div class="col-1" align="right" style="min-width: fit-content"><%= number_to_currency(transaction.profit, precision: 2) %></div>
+  <% end %>
+
+  <% unless params[:edit] || params[:sell] %>
+    <div class="col-auto">
+      <a href="/dashboard?edit=<%= transaction[:id] %>">
+        <img src="/edit.png" height="25px" title="Edit this transaction to correct information"/>
+      </a>
+    </div>
+    <div class="col-auto">
+      <form action="/delete" method="post">
+        <input type="hidden" value="<%= transaction[:id] %>" name="history_id"/>
+        <button class="btn btn-light" type="submit">
+          <img src="/delete.png" height="20px" title="Delete this entry THERE IS NO UNDO"/></button>
+      </form>
+    </div>
+  <% end %>
+</div>

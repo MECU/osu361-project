@@ -1,0 +1,30 @@
+<form action="/sell" method="post">
+  <div class="row<%= index % 2 == 0 ? '' : ' bg-light bg-gradient' %>">
+    <div class="col-1">
+      <a href="<%= "/ticker/#{transaction[:ticker]}" %>" data-turbo="false"><%= transaction[:ticker] %></a></div>
+    <div class="col-1" style="min-width: fit-content"><%= transaction[:buy_date] %></div>
+    <div class="col-1"><%= transaction[:qty] %></div>
+    <div class="col-1" align="right"><%= number_to_currency(transaction[:price], precision: 2) %></div>
+    <div class="col-1" align="right"><%= number_to_currency(transaction.basis, precision: 2) %></div>
+    <div class="col-1" style="min-width: fit-content">
+      <input type="hidden" name="history_id" value="<%= transaction[:id] %>">
+      <input type="date" name="sell_date" value="<%= Date.today.strftime('%Y-%m-%d') %>">
+    </div>
+    <div class="col-1">
+      <input type="number" name="sell_price" min="0" required>
+    </div>
+    <div class="col-1">
+    </div>
+    <div class="col-1">
+      <input type="hidden" value="<%= transaction[:id] %>" name="history_id"/>
+      <button class="btn btn-light" type="submit">
+        <img src="/save.png" height="25px" title="Save your sell entry"/>
+      </button>
+    </div>
+    <div class="col-1">
+      <a href="/dashboard">
+        <img src="/undo.png" height="20px" title="Undo your changes"/>
+      </a>
+    </div>
+  </div>
+</form>

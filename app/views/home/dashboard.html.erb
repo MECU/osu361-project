@@ -1,0 +1,80 @@
+<%= render 'partials/header' %>
+
+<div class="container text-center">
+  <% if @history.empty? %>
+    Start with the <a href='/search'>Search</a> page to find your stock to record your buy transactions.
+  <% else %>
+    <turbo-frame id="search" class="child">
+      <% if defined? delete %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          Your delete request was successful.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      <% if defined? sell %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          Your sell request was successful.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      <% if defined? edit %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          Your edit request was successful.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col-12">
+          <div class="float-start">
+            <% if params[:owned] %>
+              <a href='/dashboard'>
+                <button class="btn btn-success" type="submit" style="min-width: 236px">
+                  Show all items
+                </button>
+              </a>
+            <% else %>
+              <a href='/dashboard?owned=true'>
+                <button class="btn btn-primary" type="submit">
+                  Only show currently owned items
+                </button>
+              </a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1">ticker</div>
+        <div class="col-1" style="min-width: fit-content">Buy Date</div>
+        <div class="col-1">Qty</div>
+        <div class="col-1">Price</div>
+        <div class="col-1" style="min-width: fit-content">Cost Basis</div>
+        <div class="col-1" style="min-width: fit-content">Sell Date</div>
+        <div class="col-1">Price</div>
+        <div class="col-1" style="min-width: fit-content">Profit/Loss</div>
+        <div class="col-1"></div>
+        <div class="col-1"></div>
+      </div>
+
+      <% @history.each.with_index(1) do |transaction, index| %>
+        <% if params[:edit].to_i == transaction[:id] %>
+          <%= render 'partials/ticker_edit', transaction:, index: %>
+        <% elsif params[:sell].to_i == transaction[:id] %>
+          <%= render 'partials/ticker_sell', transaction:, index: %>
+        <% else %>
+          <%= render 'partials/ticker', transaction:, index: %>
+        <% end %>
+      <% end %>
+
+      <div class="row">
+        <div class="col-1">Total</div>
+        <div class="col-3"></div>
+        <div class="col-1" align="right"><%= number_to_currency(@history.map(&:basis).sum, precision: 2) %></div>
+        <div class="col-2"></div>
+        <div class="col-1" align="right"><%= number_to_currency(@history.map(&:profit).sum, precision: 2) %></div>
+        <div class="col-1"></div>
+        <div class="col-1"></div>
+      </div>
+    </turbo-frame>
+  <% end %>
+</div>
