@@ -18,13 +18,13 @@
         <input type="date" name="sell_date" value="<%= transaction[:sell_date] %>">
       </div>
       <div class="col-1" style="min-width: fit-content">
-        <input type="number" name="sell_price" min="0" value="<%= transaction[:sell_price] %>" style="width: 100px">
+        <input type="text" name="sell_price" value="<%= transaction[:sell_price] %>" style="width: 100px">
       </div>
     <% end %>
     <div class="col-1">
       <input type="hidden" value="<%= transaction[:id] %>" name="history_id"/>
       <button class="btn btn-light" type="submit">
-        <img src="/save.png" height="25px" title="Save your sell entry"/>
+        <img src="/save.png" height="25px" title="Save your edits"/>
       </button>
     </div>
     <div class="col-1">

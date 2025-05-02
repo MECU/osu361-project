@@ -1,18 +1,27 @@
 <div class="parent">
   <div class="child">
-    <img src="/logo.png" height="75px" />
+    <img src="/logo.png" height="75px"/>
   </div>
+  <h2 class="text-center">Stock Trader Tracker</h2>
+  <h3 class="text-center">Login:</h3>
   <div class="child">
     <form action="/login" method="post">
-      <input type="text" name="username" placeholder="username"/><br/>
-      <input type="password" name="password" placeholder="password"/>
-      <button type="submit">Log in</button>
+      <input type="text" name="username" placeholder="username" required/><br/>
+      <input type="password" name="password" placeholder="password" required/>
+      <button class="btn btn-primary" type="submit">Log in</button>
     </form>
   </div>
   <div class="child">
-    <span style="text-decoration: underline; text-decoration-style: dotted;">No Password?</span>
+    <div class="card" style="width: 25rem;">
+      <div class="card-body">
+        <h5 class="card-title">No Password?</h5>
+        <p class="card-text">Contact the owner of the site to get an account.</p>
+      </div>
+    </div>
   </div>
   <div class="child">
-    Track your stock purchases and discover stock and your performance.
+    <div class="alert alert-primary" role="alert">
+      Track your stock purchases and discover stock and your performance.
+    </div>
   </div>
 </div>
